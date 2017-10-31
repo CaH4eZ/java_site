@@ -10,6 +10,8 @@
                 $('#sendRequest').click(function(){
                     var id = $('#userId').val();
 
+                    //Коментарий для проверки
+
                     $.ajax({
                         url:'http://localhost:8080/user/findById/'+id,
                         type:'GET',
