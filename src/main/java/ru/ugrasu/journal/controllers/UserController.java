@@ -1,6 +1,8 @@
 package ru.ugrasu.journal.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.ugrasu.journal.exception.ResourceNotFoundException;
 import ru.ugrasu.journal.model.entities.UserEntity;
@@ -11,6 +13,7 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @RequestMapping(value = "user")
@@ -50,17 +53,30 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/save/{id}/{name}/{role}/{group}", consumes = APPLICATION_JSON_UTF8_VALUE, method = GET)
-    //public List<UserEntity> save (@RequestBody UserEntity userEntity){
-    public List<UserEntity> save (int id, String name, int role, int group) {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setId(id);
-        userEntity.setName(name);
-        userEntity.setRole(role);
-        userEntity.setGroup(group);
-        userService.save(userEntity);
-        return null;
+    ////////////////////////////////////////////////
+
+    @RequestMapping(value = "/update", consumes = APPLICATION_JSON_UTF8_VALUE, method = POST)
+    public ResponseEntity<UserEntity> update(@RequestBody UserEntity userEntity){
+        if (userEntity != null) {
+            userEntity.setName(userEntity.getName() + " new!");
+        }
+
+        return new ResponseEntity<UserEntity>(userEntity, HttpStatus.OK);
     }
+
+    //Для возвращения json методу update
+    @RequestMapping(value = "/get")
+    public ResponseEntity<UserEntity> get() {
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setName("teacher");
+        userEntity.setGroup(1);
+        userEntity.setRole(2);
+
+        return new ResponseEntity<UserEntity> (userEntity, HttpStatus.OK);
+    }
+
+    /////////////////////////////////////////////////////
 
     @RequestMapping(value = "/delete/{id}", consumes = APPLICATION_JSON_UTF8_VALUE, method = GET)
     public void delete (@PathVariable("id") Integer id) {
