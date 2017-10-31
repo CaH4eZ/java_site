@@ -7,8 +7,8 @@
          <script>
             $( document ).ready(function() {
 
-                $('#sendRequest').click(function(){
-                    var id = $('#userId').val();
+                $('#findRequest').click(function(){
+                    var id = $('#findUserId').val();
 
                     $.ajax({
                         url:'http://localhost:8080/user/findById/' + id,
@@ -19,19 +19,52 @@
                         },
                         error: function(xhr,textStatus){
                             if(xhr.status=="500")
-                                $('#teacherName').html("<H1 style='color:red'>Ошибка на сервере</H1>");  
-                            else $('#teacherName').html("<H1 style='color:red'>Ничего не найдено</H1>");  
+                                $('#teacherName').html("<H1 style='color:red'>Ошибка на сервере</H1>");
+                            else $('#teacherName').html("<H1 style='color:red'>Ничего не найдено</H1>");
                         }
 
                     })
                 })
 
+                $('#updateRequest').click(function(){
+                    var data = {
+                        "id":$("#id").val(),
+                        "name":$("#name").val(),
+                        "group":$("#group").val(),
+                        "role":$("#role").val()
+                    };
+
+                    $.ajax({
+                        url:'http://localhost:8080/user/update',
+                        type:'POST',
+                        data: jQuery("#formId").serialize(),
+                        success: function(data){
+                            console.log(data);
+                        }
+//                        error: function(xhr,textStatus){
+//                            if(xhr.status=="500")
+//                                $('#teacherName').html("<H1 style='color:red'>Ошибка на сервере</H1>");
+//                            else $('#teacherName').html("<H1 style='color:red'>Ничего не найдено</H1>");
+//                        }
+                    })
+                })
+
             });
            console.log( );
-        </script>
-        <input type="text" id="userId"/>
-        <input type="button" value="Поиск" id="sendRequest"/>
+         </script>
 
-        <div id="teacherName"></div>
+         <input type="text" id="findUserId"/>
+         <input type="button" value="Поиск" id="findRequest"/>
+
+         <div id="teacherName"></div>
+
+         <form method="post" id="formId">
+             <input type="number" id="id"/>
+             <input type="text" id="name"/>
+             <input type="group" id="group"/>
+             <input type="role" id="role"/>
+             <input type="button" value="Обновить имя" id="updateRequest"/>
+         </form>
+
     </body>
 </html>
