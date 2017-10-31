@@ -50,32 +50,50 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/deleteById/{id}", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
-    public String deleteById(@PathVariable("id") Integer id) {
-        try {
-            userService.deleteById(id);
-            return "Controller! Deleted with id = " + id;
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+    @RequestMapping(value = "/save/{id}/{name}/{role}/{group}", consumes = APPLICATION_JSON_UTF8_VALUE, method = GET)
+    //public List<UserEntity> save (@RequestBody UserEntity userEntity){
+    public List<UserEntity> save (int id, String name, int role, int group) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(id);
+        userEntity.setName(name);
+        userEntity.setRole(role);
+        userEntity.setGroup(group);
+        userService.save(userEntity);
+        return null;
     }
 
-    @RequestMapping(value = "/insertIntoDB/{id}/{name}/{role}/{group}", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
-    public UserEntity insertIntoDB(@PathVariable("id") int id, @PathVariable("name") String name, @PathVariable("role") int role, @PathVariable("group") int group) {
-        userService.insertIntoDB(id,name,role,group);
-        return userService.findById(id);
+    @RequestMapping(value = "/delete/{id}", consumes = APPLICATION_JSON_UTF8_VALUE, method = GET)
+    public void delete (@PathVariable("id") Integer id) {
+        System.out.println("Controller delete user with id = " + id);
+        userService.delete(id);
     }
 
-    @RequestMapping(value = "/updateById/{id}/{name}", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
-    public UserEntity updateById(@PathVariable("id") int id, @PathVariable("name") String name) {
-        UserEntity user;
-        user = userService.findById(id);
-        if (user == null) {
-            throw new RuntimeException("User with id = " + id + " not found");
-        }
-        userService.updateById(id,name);
-        user = new UserEntity();
-        user = userService.findById(id);
-        return user;
-    }
+//    @RequestMapping(value = "/deleteById/{id}", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
+//    public String deleteById(@PathVariable("id") Integer id) {
+//        try {
+//            userService.deleteById(id);
+//            return "Controller! Deleted with id = " + id;
+//        } catch (Exception e) {
+//            throw new RuntimeException(e.getMessage());
+//        }
+//    }
+//
+//    @RequestMapping(value = "/insertIntoDB/{id}/{name}/{role}/{group}", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
+//    public UserEntity insertIntoDB(@PathVariable("id") int id, @PathVariable("name") String name, @PathVariable("role") int role, @PathVariable("group") int group) {
+//        userService.insertIntoDB(id,name,role,group);
+//        return userService.findById(id);
+//    }
+//
+//    @RequestMapping(value = "/updateById/{id}/{name}", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
+//    public UserEntity updateById(@PathVariable("id") int id, @PathVariable("name") String name) {
+//        UserEntity user;
+//        user = userService.findById(id);
+//        if (user == null) {
+//            throw new RuntimeException("User with id = " + id + " not found");
+//        }
+//        userService.updateById(id,name);
+//        user = new UserEntity();
+//        user = userService.findById(id);
+//        return user;
+//    }
 }
