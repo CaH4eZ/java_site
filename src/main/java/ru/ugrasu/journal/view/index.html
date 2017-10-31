@@ -11,7 +11,7 @@
                     var id = $('#userId').val();
 
                     $.ajax({
-                        url:'http://localhost:8080/user/findById/'+id,
+                        url:'http://localhost:8080/user/findById/' + id,
                         type:'GET',
                         success: function(data){
                             console.log(data);
@@ -30,8 +30,8 @@
            console.log( );
         </script>
         <input type="text" id="userId"/>
-        <input type="button" value="Поиск" id = "sendRequest"/>
+        <input type="button" value="Поиск" id="sendRequest"/>
 
-        <div id = "teacherName"></div>
+        <div id="teacherName"></div>
     </body>
 </html>

@@ -34,7 +34,7 @@ public class UserController {
         try {
             return userService.findById(id);
         } catch (Exception e) {
-            throw new ResourceNotFoundException("Нет такого преподавателя");
+            throw new ResourceNotFoundException("Teacher not found");
         }
     }
 

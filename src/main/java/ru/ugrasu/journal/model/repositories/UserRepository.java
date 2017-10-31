@@ -21,20 +21,18 @@ public interface UserRepository extends CrudRepository<UserEntity, Integer> {
     @Query("select u from UserEntity u where u.name like concat(:name,'%')")
     public List<UserEntity> findByNameContaining(@Param("name") String name);
 
-    @Modifying
-    @Transactional
-    @Query("delete from UserEntity u where u.id = :id")
-    public void deleteById(@Param("id") int id);
-
-
-
-    @Modifying
-    @Transactional
-    @Query("update UserEntity u set u.name = :name where u.id = :id")
-    public void updateById(@Param("id") int id, @Param("name") String name);
-
-    @Modifying
-    @Transactional
-    @Query(value = "insert into user values(:id,:name,:role,:group)", nativeQuery = true)
-    public void insertIntoDB(@Param("id") int id, @Param("name") String name, @Param("role") int role, @Param("group") int group);
+//    @Modifying
+//    @Transactional
+//    @Query("delete from UserEntity u where u.id = :id")
+//    public void deleteById(@Param("id") int id);
+//
+//    @Modifying
+//    @Transactional
+//    @Query("update UserEntity u set u.name = :name where u.id = :id")
+//    public void updateById(@Param("id") int id, @Param("name") String name);
+//
+//    @Modifying
+//    @Transactional
+//    @Query(value = "insert into user values(:id,:name,:role,:group)", nativeQuery = true)
+//    public void insertIntoDB(@Param("id") int id, @Param("name") String name, @Param("role") int role, @Param("group") int group);
 }
