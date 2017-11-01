@@ -32,33 +32,11 @@ public class UserService {
 
     public void delete(int id) {userRepository.delete(id);}
 
-    public void save(UserEntity userEntity) {
-        userRepository.save(userEntity);
+//    public UserEntity save(UserEntity userEntity) {
+//        return userRepository.save(userEntity);
+//    }
+
+    public void mySave(Integer id, String name,Integer role,Integer group) {
+        userRepository.mySave(id,name,role,group);
     }
-
-//    public void deleteById(int id) {
-//        UserEntity user;
-//        user = userRepository.findOne(id);
-//        if (user == null) {
-//            throw new RuntimeException("User with id = " + id + " not found");
-//        }
-//            userRepository.deleteById(id);
-//    }
-
-//    public void updateById(int id, String name) {
-//        UserEntity user;
-//        user = userRepository.findOne(id);
-//        if (user == null) {
-//            throw new RuntimeException("User with id = " + id + " not found");
-//        }
-//        userRepository.updateById(id, name);
-//        //userRepository.save()
-//
-//        user = userRepository.findOne(id);
-//        System.out.println("Updated " + id + " user");
-//    }
-//
-//    public void insertIntoDB(int id, String name, int role, int group) {
-//        userRepository.insertIntoDB(id,name,role,group);
-//    }
 }

@@ -1,6 +1,5 @@
 package ru.ugrasu.journal.model.repositories;
 
-import org.hibernate.annotations.NamedNativeQuery;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -21,18 +20,13 @@ public interface UserRepository extends CrudRepository<UserEntity, Integer> {
     @Query("select u from UserEntity u where u.name like concat(:name,'%')")
     public List<UserEntity> findByNameContaining(@Param("name") String name);
 
-//    @Modifying
-//    @Transactional
-//    @Query("delete from UserEntity u where u.id = :id")
-//    public void deleteById(@Param("id") int id);
-//
-//    @Modifying
-//    @Transactional
-//    @Query("update UserEntity u set u.name = :name where u.id = :id")
-//    public void updateById(@Param("id") int id, @Param("name") String name);
-//
-//    @Modifying
-//    @Transactional
-//    @Query(value = "insert into user values(:id,:name,:role,:group)", nativeQuery = true)
-//    public void insertIntoDB(@Param("id") int id, @Param("name") String name, @Param("role") int role, @Param("group") int group);
+    //TODO обычный метод save не работает, потому что ругается на sql из-за неакранированных кавычек при приеме json'а
+
+    @Transactional
+    @Modifying
+    @Query(value = "update journal.user u set u.name=:name, u.role=:role, u.group=:group where u.id=:id",
+            nativeQuery = true)
+    public void mySave(@Param("id") Integer id, @Param("name") String name,
+                       @Param("role") Integer role, @Param("group") Integer group);
+
 }

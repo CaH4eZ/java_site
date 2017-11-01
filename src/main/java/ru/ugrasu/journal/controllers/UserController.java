@@ -2,6 +2,7 @@ package ru.ugrasu.journal.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.ugrasu.journal.exception.ResourceNotFoundException;
@@ -53,30 +54,12 @@ public class UserController {
         }
     }
 
-    ////////////////////////////////////////////////
-
-    @RequestMapping(value = "/update", consumes = APPLICATION_JSON_UTF8_VALUE, method = POST)
-    public ResponseEntity<UserEntity> update(@RequestBody UserEntity userEntity){
-        if (userEntity != null) {
-            userEntity.setName(userEntity.getName() + " new!");
-        }
-
-        return new ResponseEntity<UserEntity>(userEntity, HttpStatus.OK);
+    @RequestMapping(value = "/save", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, method = RequestMethod.POST)
+    public ResponseEntity<UserEntity> save(UserEntity newUser){
+        //userService.save(newUser);
+        userService.mySave(newUser.getId(),newUser.getName(),newUser.getRole(),newUser.getGroup());
+        return new ResponseEntity<UserEntity>(newUser, HttpStatus.OK);
     }
-
-    //Для возвращения json методу update
-    @RequestMapping(value = "/get")
-    public ResponseEntity<UserEntity> get() {
-
-        UserEntity userEntity = new UserEntity();
-        userEntity.setName("teacher");
-        userEntity.setGroup(1);
-        userEntity.setRole(2);
-
-        return new ResponseEntity<UserEntity> (userEntity, HttpStatus.OK);
-    }
-
-    /////////////////////////////////////////////////////
 
     @RequestMapping(value = "/delete/{id}", consumes = APPLICATION_JSON_UTF8_VALUE, method = GET)
     public void delete (@PathVariable("id") Integer id) {
@@ -84,32 +67,4 @@ public class UserController {
         userService.delete(id);
     }
 
-//    @RequestMapping(value = "/deleteById/{id}", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
-//    public String deleteById(@PathVariable("id") Integer id) {
-//        try {
-//            userService.deleteById(id);
-//            return "Controller! Deleted with id = " + id;
-//        } catch (Exception e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//    }
-//
-//    @RequestMapping(value = "/insertIntoDB/{id}/{name}/{role}/{group}", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
-//    public UserEntity insertIntoDB(@PathVariable("id") int id, @PathVariable("name") String name, @PathVariable("role") int role, @PathVariable("group") int group) {
-//        userService.insertIntoDB(id,name,role,group);
-//        return userService.findById(id);
-//    }
-//
-//    @RequestMapping(value = "/updateById/{id}/{name}", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
-//    public UserEntity updateById(@PathVariable("id") int id, @PathVariable("name") String name) {
-//        UserEntity user;
-//        user = userService.findById(id);
-//        if (user == null) {
-//            throw new RuntimeException("User with id = " + id + " not found");
-//        }
-//        userService.updateById(id,name);
-//        user = new UserEntity();
-//        user = userService.findById(id);
-//        return user;
-//    }
 }
