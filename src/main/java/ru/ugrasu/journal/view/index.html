@@ -27,25 +27,20 @@
                 })
 
                 $('#updateRequest').click(function(){
-                    var data = {
-                        "id":$("#id").val(),
-                        "name":$("#name").val(),
-                        "group":$("#group").val(),
-                        "role":$("#role").val()
-                    };
+                    var data = $("#formId").serialize();
 
                     $.ajax({
-                        url:'http://localhost:8080/user/update',
+                        url:'http://localhost:8080/user/save',
                         type:'POST',
-                        data: jQuery("#formId").serialize(),
+                        data: data,
                         success: function(data){
                             console.log(data);
+                        },
+                        error: function(xhr,textStatus){
+                            if(xhr.status=="500")
+                                $('#teacherName').html("<H1 style='color:red'>Ошибка на сервере</H1>");
+                            else $('#teacherName').html("<H1 style='color:red'>Ничего не найдено</H1>");
                         }
-//                        error: function(xhr,textStatus){
-//                            if(xhr.status=="500")
-//                                $('#teacherName').html("<H1 style='color:red'>Ошибка на сервере</H1>");
-//                            else $('#teacherName').html("<H1 style='color:red'>Ничего не найдено</H1>");
-//                        }
                     })
                 })
 
@@ -59,10 +54,10 @@
          <div id="teacherName"></div>
 
          <form method="post" id="formId">
-             <input type="number" id="id"/>
-             <input type="text" id="name"/>
-             <input type="group" id="group"/>
-             <input type="role" id="role"/>
+             <input type="number" id="id" name="id" value="" />
+             <input type="text" id="name" name="name" value="" />
+             <input type="number" id="group" name="group" value="" />
+             <input type="number" id="role" name="role" value="" />
              <input type="button" value="Обновить имя" id="updateRequest"/>
          </form>
 
