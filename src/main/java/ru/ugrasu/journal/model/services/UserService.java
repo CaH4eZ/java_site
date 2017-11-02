@@ -32,11 +32,8 @@ public class UserService {
 
     public void delete(int id) {userRepository.delete(id);}
 
-//    public UserEntity save(UserEntity userEntity) {
-//        return userRepository.save(userEntity);
-//    }
-
-    public void mySave(Integer id, String name,Integer role,Integer group) {
-        userRepository.mySave(id,name,role,group);
+    public UserEntity save(UserEntity userEntity) {
+        return userRepository.save(userEntity);
     }
+
 }

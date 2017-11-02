@@ -15,19 +15,19 @@
                         type:'GET',
                         success: function(data){
                             console.log(data);
-                            $('#teacherName').html(data.name);
+                            $('#error').html(data.name);
                         },
                         error: function(xhr,textStatus){
                             if(xhr.status=="500")
-                                $('#teacherName').html("<H1 style='color:red'>Ошибка на сервере</H1>");
-                            else $('#teacherName').html("<H1 style='color:red'>Ничего не найдено</H1>");
+                                $('#error').html("<H1 style='color:red'>Ошибка на сервере</H1>");
+                            else $('#error').html("<H1 style='color:red'>Ничего не найдено</H1>");
                         }
 
                     })
                 })
 
-                $('#updateRequest').click(function(){
-                    var data = $("#formId").serialize();
+                $('#saveRequest').click(function(){
+                    var data = $("#saveForm").serialize();
 
                     $.ajax({
                         url:'http://localhost:8080/user/save',
@@ -38,8 +38,8 @@
                         },
                         error: function(xhr,textStatus){
                             if(xhr.status=="500")
-                                $('#teacherName').html("<H1 style='color:red'>Ошибка на сервере</H1>");
-                            else $('#teacherName').html("<H1 style='color:red'>Ничего не найдено</H1>");
+                                $('#error').html("<H1 style='color:red'>Ошибка на сервере</H1>");
+                            else $('#error').html("<H1 style='color:red'>Ничего не найдено</H1>");
                         }
                     })
                 })
@@ -50,15 +50,15 @@
 
          <input type="text" id="findUserId"/>
          <input type="button" value="Поиск" id="findRequest"/>
-
-         <div id="teacherName"></div>
-
-         <form method="post" id="formId">
-             <input type="number" id="id" name="id" value="" />
-             <input type="text" id="name" name="name" value="" />
-             <input type="number" id="group" name="group" value="" />
-             <input type="number" id="role" name="role" value="" />
-             <input type="button" value="Обновить имя" id="updateRequest"/>
+         <br>
+         <div id="error"></div>
+         <br>
+         <form method="post" id="saveForm">
+             <input type="number" name="id" />
+             <input type="text" name="name" />
+             <input type="number" name="group" />
+             <input type="number" name="role"  />
+             <input type="button" value="Сохранить/Обновить" id="saveRequest"/>
          </form>
 
     </body>

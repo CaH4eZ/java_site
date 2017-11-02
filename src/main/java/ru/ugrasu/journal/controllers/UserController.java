@@ -55,10 +55,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/save", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, method = RequestMethod.POST)
-    public ResponseEntity<UserEntity> save(UserEntity newUser){
-        //userService.save(newUser);
-        userService.mySave(newUser.getId(),newUser.getName(),newUser.getRole(),newUser.getGroup());
-        return new ResponseEntity<UserEntity>(newUser, HttpStatus.OK);
+    public UserEntity save(UserEntity newUser){
+        return userService.save(newUser);
+        //return new ResponseEntity<UserEntity>(newUser, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/delete/{id}", consumes = APPLICATION_JSON_UTF8_VALUE, method = GET)

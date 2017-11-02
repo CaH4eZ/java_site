@@ -20,13 +20,4 @@ public interface UserRepository extends CrudRepository<UserEntity, Integer> {
     @Query("select u from UserEntity u where u.name like concat(:name,'%')")
     public List<UserEntity> findByNameContaining(@Param("name") String name);
 
-    //TODO обычный метод save не работает, потому что ругается на sql из-за неакранированных кавычек при приеме json'а
-
-    @Transactional
-    @Modifying
-    @Query(value = "update journal.user u set u.name=:name, u.role=:role, u.group=:group where u.id=:id",
-            nativeQuery = true)
-    public void mySave(@Param("id") Integer id, @Param("name") String name,
-                       @Param("role") Integer role, @Param("group") Integer group);
-
 }
