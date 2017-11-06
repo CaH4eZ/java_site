@@ -1,65 +1,30 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    </head>
-
-    <body>
-         <script>
-            $( document ).ready(function() {
-
-                $('#findRequest').click(function(){
-                    var id = $('#findUserId').val();
-
-                    $.ajax({
-                        url:'http://localhost:8080/user/findById/' + id,
-                        type:'GET',
-                        success: function(data){
-                            console.log(data);
-                            $('#error').html(data.name);
-                        },
-                        error: function(xhr,textStatus){
-                            if(xhr.status=="500")
-                                $('#error').html("<H1 style='color:red'>Ошибка на сервере</H1>");
-                            else $('#error').html("<H1 style='color:red'>Ничего не найдено</H1>");
-                        }
-
-                    })
-                })
-
-                $('#saveRequest').click(function(){
-                    var data = $("#saveForm").serialize();
-
-                    $.ajax({
-                        url:'http://localhost:8080/user/save',
-                        type:'POST',
-                        data: data,
-                        success: function(data){
-                            console.log(data);
-                        },
-                        error: function(xhr,textStatus){
-                            if(xhr.status=="500")
-                                $('#error').html("<H1 style='color:red'>Ошибка на сервере</H1>");
-                            else $('#error').html("<H1 style='color:red'>Ничего не найдено</H1>");
-                        }
-                    })
-                })
-
-            });
-           console.log( );
-         </script>
-
-         <input type="text" id="findUserId"/>
-         <input type="button" value="Поиск" id="findRequest"/>
-         <br>
-         <div id="error"></div>
-         <br>
-         <form method="post" id="saveForm">
-             <input type="number" name="id" />
-             <input type="text" name="name" />
-             <input type="number" name="group" />
-             <input type="number" name="role"  />
-             <input type="button" value="Сохранить/Обновить" id="saveRequest"/>
-         </form>
-
-    </body>
+<head>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="script.js"></script>
+</head>
+    <h3>Поиск по id</h3>
+    <input type="text" id="findIdText"/>
+    <input type="button" value="Поиск" id="findRequest"/>
+    <br>
+    <div id="idDiv"></div>
+    <br>
+    <h3>id, имя, группа, роль</h3>
+    <form method="post" id="saveForm">
+        <input type="number" name="id" />
+        <input type="text" name="name" />
+        <input type="number" name="group" />
+        <input type="number" name="role"  />
+        <input type="button" value="Сохранить/Обновить" id="saveRequest"/>
+    </form>
+    <br>
+    <div id="saveDiv"></div>
+    <br>
+    <h3>Удалить по id</h3>
+    <input type="text" id="deleteIdText"/>
+    <input type="button" value="Удалить" id="deleteRequest"/>
+    <br>
+    <div id="deleteDiv"></div>
+</body>
 </html>

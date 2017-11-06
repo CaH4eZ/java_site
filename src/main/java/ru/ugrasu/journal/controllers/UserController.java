@@ -27,14 +27,9 @@ public class UserController {
     //1. Обработка Null-value
     //2. Обработка исключений
 
-    @RequestMapping(value = "/findAll", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
-    public List<UserEntity> findAll() {
-        return userService.findAll();
-    }
-
     @RequestMapping(value = "/findById/{id}", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
-    public UserEntity findById(@PathVariable("id") Integer id) {
-        System.out.println("Controller! Find by Id = " + id);
+    public UserEntity findById(@PathVariable("id") int id) {
+        System.out.println("Execution: controller - findById - " + id);
         try {
             return userService.findById(id);
         } catch (Exception e) {
@@ -42,28 +37,16 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/findByName/{name}", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
-    public List<UserEntity> findByFname(@PathVariable("name") String name) {
-        System.out.println("Controller! Find by name = " + name);
-
-        //TODO
-        if ("abc.".matches("[a-zA-Z]")) {
-            return userService.findByName(name);
-        } else {
-            throw new RuntimeException("name can't contain numbers");
-        }
-    }
-
     @RequestMapping(value = "/save", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, method = RequestMethod.POST)
     public UserEntity save(UserEntity newUser){
         return userService.save(newUser);
+        //TODO Response возвращает со статусом
         //return new ResponseEntity<UserEntity>(newUser, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete/{id}", consumes = APPLICATION_JSON_UTF8_VALUE, method = GET)
+    @RequestMapping(value = "/deleteById/{id}", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
     public void delete (@PathVariable("id") Integer id) {
-        System.out.println("Controller delete user with id = " + id);
-        userService.delete(id);
+        userService.deleteById(id);
     }
 
 }

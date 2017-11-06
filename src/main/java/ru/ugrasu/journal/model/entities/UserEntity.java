@@ -41,8 +41,7 @@ public class UserEntity {
         this.role = role;
     }
 
-    //Без кавычек ругается на то, что group - зарезервировано в SQL
-
+    //Без кавычек group - зарезервировано в SQL!
     @Basic
     @Column(name = "\"group\"")
     public int getGroup() {
