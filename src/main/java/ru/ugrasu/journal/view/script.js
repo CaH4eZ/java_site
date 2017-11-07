@@ -1,6 +1,8 @@
 $( document ).ready(function() {
 
-    $('#findRequest').click(function(){
+
+
+    $('#findIdRequest').click(function(){
         var id = $('#findIdText').val();
 
         $.ajax({
@@ -8,13 +10,37 @@ $( document ).ready(function() {
             type:'GET',
             success: function(data){
                 console.log(data);
-                $('#idDiv').html('');
-                $('#idDiv').html(data.name);
+                $('#findIdDiv').html('');
+                $('#findIdDiv').html(data.name);
             },
             error: function(xhr,textStatus){
                 if(xhr.status=="500")
-                    $('#idDiv').html("<H1 style='color:red'>Ошибка на сервере</H1>");
-                else $('#idDiv').html("<H1 style='color:red'>Ничего не найдено</H1>");
+                    $('#findIdDiv').html("<H1 style='color:red'>Ошибка на сервере</H1>");
+                else $('#findIdDiv').html("<H1 style='color:red'>Ничего не найдено</H1>");
+            }
+
+        })
+    })
+
+    $('#findNameRequest').click(function(){
+        var name = $('#findNameText').val();
+
+        $.ajax({
+            url:'http://localhost:8080/user/findByName/' + name,
+            type:'GET',
+            success: function(data){
+                console.log(data);
+                var out = '';
+                data.forEach(function(item, i, arr) {
+                    out = out + item.id + ' ' + item.name + ' ' + item.role + ' ' + item.group + '<br>';
+                });
+
+                $('#findNameDiv').html(out);
+            },
+            error: function(xhr,textStatus){
+                if(xhr.status=="500")
+                    $('#findNameDiv').html("<H1 style='color:red'>Ошибка на сервере</H1>");
+                else $('#findNameDiv').html("<H1 style='color:red'>Ничего не найдено</H1>");
             }
 
         })

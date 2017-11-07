@@ -1,30 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="script.js"></script>
 </head>
     <h3>Поиск по id</h3>
-    <input type="text" id="findIdText"/>
-    <input type="button" value="Поиск" id="findRequest"/>
+    <input type="text" id="findIdText" placeholder="Введите id"/>
+    <input type="button" value="Поиск" id="findIdRequest"/>
     <br>
-    <div id="idDiv"></div>
+    <div id="findIdDiv"></div>
     <br>
+    <h3>Поиск по имени</h3>
+    <input type="text" id="findNameText" placeholder="Введите имя"/>
+    <input type="button" value="Поиск" id="findNameRequest"/>
+    <br>
+    <div id="findNameDiv"></div>
+    <br>
+    <h3>Выпадающий список</h3>
+    <select id="userList" name="userList[]" multiple>
+        <option value="iphone 6s">iPhone 6S</option>
+        <option value="lumia 950">Lumia 950</option>
+        <option value="nexus 5x">Nexus 5X</option>
+        <option value="galaxy s7">Galaxy S7</option>
+    </select>
     <h3>id, имя, группа, роль</h3>
     <form method="post" id="saveForm">
-        <input type="number" name="id" />
-        <input type="text" name="name" />
-        <input type="number" name="group" />
-        <input type="number" name="role"  />
+        <input type="number" name="id" placeholder="Введите id" />
+        <input type="text" name="name" placeholder="Введите имя" />
+        <input type="number" name="group" placeholder="Введите группу (пока без связей, 1)" />
+
+        <!-- TODO Выпадающий список !!! -->
+        <input type="number" name="role" placeholder="Роль (пока без связей, 1-5)" />
         <input type="button" value="Сохранить/Обновить" id="saveRequest"/>
     </form>
     <br>
     <div id="saveDiv"></div>
     <br>
     <h3>Удалить по id</h3>
-    <input type="text" id="deleteIdText"/>
+    <input type="text" id="deleteIdText" placeholder="Введите id"/>
     <input type="button" value="Удалить" id="deleteRequest"/>
     <br>
     <div id="deleteDiv"></div>
 </body>
+    <!-- Скрипты -->
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="script.js"></script>
 </html>

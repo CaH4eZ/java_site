@@ -21,7 +21,8 @@ public class UserService {
         return userRepository.findOne(id);
     }
 
-    public void deleteById(int id) {
-        userRepository.delete(id);
-    }
+    public void deleteById(int id) { userRepository.delete(id); }
+
+    public List<UserEntity> findByName(String name) { return userRepository.findByName(name); }
+
 }
