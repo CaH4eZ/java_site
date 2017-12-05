@@ -2,6 +2,7 @@ package ru.ugrasu.journal.model.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.ugrasu.journal.exception.ResourceNotFoundException;
 import ru.ugrasu.journal.model.entities.UserEntity;
 import ru.ugrasu.journal.model.repositories.UserRepository;
 
@@ -18,7 +19,12 @@ public class UserService {
     }
 
     public UserEntity findById(int id) {
-        return userRepository.findOne(id);
+        UserEntity userEntity = userRepository.findOne(id);
+        if (userEntity == null) {
+            throw new ResourceNotFoundException("Teacher not found");
+        } else {
+            return userEntity;
+        }
     }
 
     public void deleteById(int id) { userRepository.delete(id); }

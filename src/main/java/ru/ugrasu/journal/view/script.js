@@ -1,7 +1,5 @@
 $( document ).ready(function() {
 
-
-
     $('#findIdRequest').click(function(){
         var id = $('#findIdText').val();
 
@@ -32,7 +30,7 @@ $( document ).ready(function() {
                 console.log(data);
                 var out = '';
                 data.forEach(function(item, i, arr) {
-                    out = out + item.id + ' ' + item.name + ' ' + item.role + ' ' + item.group + '<br>';
+                    out = out + item.id + ' ' + item.name + ' ' + item.role.role + ' ' + item.group + '<br>';
                 });
 
                 $('#findNameDiv').html(out);
