@@ -8,8 +8,6 @@
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
       <mapping class="ru.ugrasu.journal.model.entities.RoleEntity"/>
       <mapping class="ru.ugrasu.journal.model.entities.UserEntity"/>
-    <mapping class="ru.ugrasu.journal.model.entities.GroupEntity"/>
-    <mapping class="ru.ugrasu.journal.model.entities.LessonEntity"/>
       <mapping class="ru.ugrasu.journal.model.entities.DepartmentEntity"/>
       <mapping class="ru.ugrasu.journal.model.entities.ExcerciseEntity"/>
       <mapping class="ru.ugrasu.journal.model.entities.InstituteEntity"/>

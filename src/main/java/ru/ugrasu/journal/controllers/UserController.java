@@ -1,17 +1,13 @@
 package ru.ugrasu.journal.controllers;
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ru.ugrasu.journal.dto.RoleDto;
 import ru.ugrasu.journal.dto.UserDto;
 import ru.ugrasu.journal.exception.ResourceNotFoundException;
 import ru.ugrasu.journal.model.entities.RoleEntity;
-import ru.ugrasu.journal.model.entities.SubjectEntity;
 import ru.ugrasu.journal.model.entities.UserEntity;
 import ru.ugrasu.journal.model.services.UserService;
 
