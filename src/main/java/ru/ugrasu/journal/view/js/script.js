@@ -13,7 +13,6 @@ $( document ).ready(function() {
         url:'http://localhost:8080/role/findAll',
         type:'GET',
         success: function(recieved){
-            console.log(recieved);
 
             //Удаление дочерних (jQuery), если они есть
             if ($('#select-group').firstChild) {
@@ -31,7 +30,6 @@ $( document ).ready(function() {
             out += "</optgroup>";
 
             $('#select-group').append(out);
-
             //Обновление material_select
             $('select').material_select();
         },
@@ -45,27 +43,28 @@ $( document ).ready(function() {
             url:'http://localhost:8080/role/findAll',
             type:'GET',
             success: function(recieved){
-                console.log(recieved);
 
                 //Удаление дочерних (jQuery)
                 $('#select-group').remove();
                 //Обновление material_select
                 $('select').material_select();
 
-                var out = '<optgroup label="Роли">';
+                var outSelect = '<optgroup label="Роли">';
+                var outTable = '<tr>';
 
                 recieved.forEach(function(item, i, arr) {
-                   out += '<option>' + item.name + '</option>';
+                   outSelect += '<option>' + item.name + '</option>';
+                   outTable += '<td>' + item.name + '</td>';
                 });
 
-                out += "</optgroup>";
+                outSelect += '</optgroup>';
+                outTable += '</tr>';
 
-                console.log(out);
-
-                $('#select-group').append(out);
-
+                $('#select-group').append(outSelect);
                 //Обновление material_select
                 $('select').material_select();
+
+                $('#table-body').append(outTable);
             },
             error: function(xhr,textStatus){
                 console.log(textStatus);
