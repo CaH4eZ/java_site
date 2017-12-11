@@ -10,7 +10,6 @@ import java.util.List;
 @Table(name = "role", schema = "journal", catalog = "")
 public class RoleEntity {
     @Id@Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Basic@Column(name = "name")
     private String name;

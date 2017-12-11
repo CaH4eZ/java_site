@@ -13,6 +13,7 @@
       <mapping class="ru.ugrasu.journal.model.entities.InstituteEntity"/>
       <mapping class="ru.ugrasu.journal.model.entities.StudyGroupEntity"/>
       <mapping class="ru.ugrasu.journal.model.entities.SubjectEntity"/>
+      <mapping class="ru.ugrasu.journal.model.entities.UserExcerciseEntity"/>
       <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 

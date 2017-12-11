@@ -10,11 +10,12 @@ import java.util.List;
 @Table(name = "user", schema = "journal", catalog = "")
 public class UserEntity {
     @Id@Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Basic@Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "userByUserId")
+    @Basic@Column(name = "password")
+    private String password;
+    @OneToMany(mappedBy = "userByTeacher")
     private List<SubjectEntity> subjectsById;
     @ManyToOne@JoinColumn(name = "role", referencedColumnName = "id", nullable = false)
     private RoleEntity roleByRole;
@@ -22,5 +23,7 @@ public class UserEntity {
     private StudyGroupEntity studyGroupByStudyGroup;
     @ManyToOne@JoinColumn(name = "department", referencedColumnName = "id")
     private DepartmentEntity departmentByDepartment;
+    @OneToMany(mappedBy = "userByUser")
+    private List<UserExcerciseEntity> userExcercisesById;
 
 }
