@@ -1,7 +1,4 @@
 $( document ).ready(function() {
-    //Инициализация material_select
-    $('select').material_select();
-
     $('.datepicker').pickadate({
         selectMonth: true,
         selectYears: 5,
@@ -11,12 +8,64 @@ $( document ).ready(function() {
         closeOnSelect: false
     });
 
+    //Обновление
+    $.ajax({
+        url:'http://localhost:8080/role/findAll',
+        type:'GET',
+        success: function(recieved){
+            console.log(recieved);
+
+            //$('#select-subject').remo
+
+            var out = '<optgroup label="Роли">';
+
+            recieved.forEach(function(item, i, arr) {
+               out += '<option>' + item.name + '</option>';
+            });
+
+            out += "</optgroup>";
+
+            $('#select-group').append(out);
+
+            //Инициализация material_select
+            $('select').material_select();
+        },
+        error: function(xhr,textStatus){
+            console.log(textStatus);
+        }
+    });
+
     $('#refrash').click(function(){
-        console.log('refrash')
+        $.ajax({
+            url:'http://localhost:8080/role/findAll',
+            type:'GET',
+            success: function(recieved){
+                console.log(recieved);
+
+                var out = '<optgroup label="Роли">';
+
+                recieved.forEach(function(item, i, arr) {
+                   out += '<option>' + item.name + '</option>';
+                });
+
+                out += "</optgroup>";
+
+                console.log(out);
+
+                $('#select-group').append(out);
+
+                //Инициализация material_select
+                $('select').material_select();
+            },
+            error: function(xhr,textStatus){
+                console.log(textStatus);
+            }
+        })
     });
 
     $('#add').click(function(){
-        console.log('add')
+        console.log('add');
+        console.log(new Date("3.27.2008"));
     });
 
     /*
