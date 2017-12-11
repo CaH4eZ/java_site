@@ -1,5 +1,25 @@
 $( document ).ready(function() {
+    //Инициализация material_select
+    $('select').material_select();
 
+    $('.datepicker').pickadate({
+        selectMonth: true,
+        selectYears: 5,
+        today: 'Сегодня',
+        clear: 'Очистить',
+        close: 'OK',
+        closeOnSelect: false
+    });
+
+    $('#refrash').click(function(){
+        console.log('refrash')
+    });
+
+    $('#add').click(function(){
+        console.log('add')
+    });
+
+    /*
     $('#findIdRequest').click(function(){
         var id = $('#findIdText').val();
 
@@ -78,6 +98,5 @@ $( document ).ready(function() {
 
         })
     })
-
+    */
 });
-console.log( );
