@@ -15,7 +15,12 @@ $( document ).ready(function() {
         success: function(recieved){
             console.log(recieved);
 
-            //$('#select-subject').remo
+            //Удаление дочерних (jQuery), если они есть
+            if ($('#select-group').firstChild) {
+                $('#select-group').remove();
+            }
+            //Обновление material_select
+            $('select').material_select();
 
             var out = '<optgroup label="Роли">';
 
@@ -27,7 +32,7 @@ $( document ).ready(function() {
 
             $('#select-group').append(out);
 
-            //Инициализация material_select
+            //Обновление material_select
             $('select').material_select();
         },
         error: function(xhr,textStatus){
@@ -42,6 +47,11 @@ $( document ).ready(function() {
             success: function(recieved){
                 console.log(recieved);
 
+                //Удаление дочерних (jQuery)
+                $('#select-group').remove();
+                //Обновление material_select
+                $('select').material_select();
+
                 var out = '<optgroup label="Роли">';
 
                 recieved.forEach(function(item, i, arr) {
@@ -54,7 +64,7 @@ $( document ).ready(function() {
 
                 $('#select-group').append(out);
 
-                //Инициализация material_select
+                //Обновление material_select
                 $('select').material_select();
             },
             error: function(xhr,textStatus){
