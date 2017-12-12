@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.ugrasu.journal.dto.RoleDto;
+import ru.ugrasu.journal.dto.UserDto;
 import ru.ugrasu.journal.model.entities.RoleEntity;
 import ru.ugrasu.journal.model.services.RoleService;
 
@@ -24,22 +25,34 @@ public class RoleController {
     public List<RoleDto> findAll() {
         System.out.println("RoleController - findAll");
 
-        List<RoleDto> roleDtoList = new ArrayList<>();
-        List<RoleEntity> roleEntityList = roleService.findAll();
+        List<RoleDto> listRoleDto = new ArrayList<>();
+        List<RoleEntity> listRoleEntity = roleService.findAll();
 
-        if (roleEntityList == null) {
+        if (listRoleEntity == null) {
             throw new RuntimeException("No roles? Impossible to see that error");
         }
         else {
-            roleEntityList.forEach(roleEntity -> {
+            listRoleEntity.forEach(roleEntity -> {
                 RoleDto roleDto = new RoleDto();
                 roleDto.setId(roleEntity.getId());
                 roleDto.setName(roleEntity.getName());
 
-                roleDtoList.add(roleDto);
+                List<UserDto> listUserDto = new ArrayList<>();
+
+                roleEntity.getUsersById().forEach(userEntity -> {
+                    UserDto userDto = new UserDto();
+                    userDto.setId(userEntity.getId());
+                    userDto.setName(userEntity.getName());
+
+                    listUserDto.add(userDto);
+
+                });
+
+                roleDto.setUsersById(listUserDto);
+                listRoleDto.add(roleDto);
             });
 
-            return roleDtoList;
+            return listRoleDto;
         }
     }
 }
