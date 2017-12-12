@@ -11,7 +11,7 @@ public class UserDto {
     private String password;
     private List<SubjectDto> subjectsById;
     private RoleDto roleByRole;
-    private StudyGroupDto studyGroupByStudyGroup;
+    private String studyGroupByStudyGroup;
     private DepartmentDto departmentByDepartment;
     private List<UserExcerciseDto> userExcercisesById;
 }
