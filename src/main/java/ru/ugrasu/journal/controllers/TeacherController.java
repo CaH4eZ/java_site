@@ -15,13 +15,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
-@RequestMapping(value = "role")
-public class RoleController {
+@RequestMapping(value = "teacher")
+public class TeacherController {
 
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping(value = "/findAll", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
+    @RequestMapping(value = "/refrash", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
     public List<RoleDto> findAll() {
         System.out.println("RoleController - findAll");
 

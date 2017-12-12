@@ -10,7 +10,7 @@ $( document ).ready(function() {
 
     //Обновление
     $.ajax({
-        url:'http://localhost:8080/role/findAll',
+        url:'http://localhost:8080/teacher/refrash',
         type:'GET',
         success: function(recieved){
 
@@ -37,7 +37,7 @@ $( document ).ready(function() {
 
     $('#refrash').click(function(){
         $.ajax({
-            url:'http://localhost:8080/role/findAll',
+            url:'http://localhost:8080/teacher/refrash',
             type:'GET',
             success: function(recieved){
 
