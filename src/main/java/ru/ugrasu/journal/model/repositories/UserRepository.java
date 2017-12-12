@@ -14,4 +14,6 @@ public interface UserRepository extends CrudRepository<UserEntity, Integer> {
     @Query("select u from UserEntity u where u.name like concat(:name,'%')")
     public List<UserEntity> findByName(@Param("name") String name);
 
+    @Query("select u from UserEntity u")
+    public List<UserEntity> findAll();
 }
