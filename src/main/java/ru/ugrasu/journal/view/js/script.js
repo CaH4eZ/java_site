@@ -14,12 +14,8 @@ $( document ).ready(function() {
         type:'GET',
         success: function(recieved){
 
-            //Удаление дочерних (jQuery), если они есть
-            if ($('#select-group').firstChild) {
-                $('#select-group').remove();
-            }
-            //Обновление material_select
-            $('select').material_select();
+            //Удаление дочерних (jQuery)
+            $('#select-group').empty();
 
             var out = '<optgroup label="Роли">';
 
@@ -27,9 +23,10 @@ $( document ).ready(function() {
                out += '<option>' + item.name + '</option>';
             });
 
-            out += "</optgroup>";
+            out += '</optgroup>';
 
             $('#select-group').append(out);
+            
             //Обновление material_select
             $('select').material_select();
         },
@@ -45,9 +42,7 @@ $( document ).ready(function() {
             success: function(recieved){
 
                 //Удаление дочерних (jQuery)
-                $('#select-group').remove();
-                //Обновление material_select
-                $('select').material_select();
+                $('#select-group').empty();
 
                 var outSelect = '<optgroup label="Роли">';
                 var outTable = '<tr>';
@@ -61,10 +56,11 @@ $( document ).ready(function() {
                 outTable += '</tr>';
 
                 $('#select-group').append(outSelect);
+                $('#table-body').append(outTable);
+
                 //Обновление material_select
                 $('select').material_select();
 
-                $('#table-body').append(outTable);
             },
             error: function(xhr,textStatus){
                 console.log(textStatus);
@@ -74,7 +70,7 @@ $( document ).ready(function() {
 
     $('#add').click(function(){
         console.log('add');
-        console.log(new Date("3.27.2008"));
+        console.log(new Date('3.27.2008'));
     });
 
     /*
