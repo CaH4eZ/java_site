@@ -1,6 +1,7 @@
 package ru.ugrasu.journal.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.ugrasu.journal.dto.StudyGroupDto;
@@ -78,29 +79,24 @@ public class TeacherController {
         }
     }
 
-    @RequestMapping(value = "/getStudents", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
-    public List<UserDto> findAllUser() {
-        System.out.println("TeacherController - findAllUser");
+    @RequestMapping(value = "/getStudentsByGroup/{id}", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
+    public List<UserDto> findUserByGroupId(@PathVariable("id") int id) {
+        System.out.println("TeacherController - findUserByGroupId - " + id);
 
         List<UserDto>       listUserDto = new ArrayList<>();
-        List<UserEntity> listUserEntity = userService.findAll();
+        List<UserEntity> listUserEntity = userService.findUserByGroupId(id);
 
         if (listUserEntity == null) {
             throw new RuntimeException("No groups");
         }
         else {
             listUserEntity.forEach(userEntity -> {
+                UserDto userDto = new UserDto();
+                userDto.setId(userEntity.getId());
+                userDto.setName(userEntity.getName());
+                userDto.setStudyGroupByStudyGroup(userEntity.getStudyGroupByStudyGroup().getName());
 
-                //Проверка роли (студент или староста)
-                String role = userEntity.getRoleByRole().getName();
-                if (role.equals("Староста") || role.equals("Студент")) {
-                    UserDto userDto = new UserDto();
-                    userDto.setId(userEntity.getId());
-                    userDto.setName(userEntity.getName());
-                    userDto.setStudyGroupByStudyGroup(userEntity.getStudyGroupByStudyGroup().getName());
-
-                    listUserDto.add(userDto);
-                }
+                listUserDto.add(userDto);
             });
 
             if (listUserDto == null) {

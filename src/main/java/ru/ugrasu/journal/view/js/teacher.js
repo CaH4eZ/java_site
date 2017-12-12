@@ -31,11 +31,11 @@ $( document ).ready(function() {
             $('select').material_select();
         },
         error: function(xhr,textStatus){
-            console.log(textStatus);
+            alert('Обновление предметов - ' + textStatus);
         }
     });
 
-    //Обновление групп 
+    //Обновление групп
     $.ajax({
         url:'http://localhost:8080/teacher/refrashStudyGroup',
         type:'GET',
@@ -58,19 +58,20 @@ $( document ).ready(function() {
             $('select').material_select();
         },
         error: function(xhr,textStatus){
-            console.log(textStatus);
+            alert('Обновление групп - ' + textStatus);
         }
     });
 
     $('#refrash').click(function(){
 
-        var subject = $('#select-subject').val();
-        var group   = $('#select-group option:selected').text();
+        //Для того, чтобы вывести текст
+        //var group = $('#select-group option:selected').text();
 
-        console.log("1 - " + subject + ", 2 - " + group);
+        //При приеме был получен id в value
+        var group   = $('#select-group').val();
 
         $.ajax({
-            url:'http://localhost:8080/teacher/getStudents',
+            url:'http://localhost:8080/teacher/getStudentsByGroup/' + group,
             type:'GET',
             success: function(recieved){
 
@@ -80,22 +81,20 @@ $( document ).ready(function() {
                 var a = 1;
 
                 recieved.forEach(function(item, i, arr) {
-                   if (group == item.studyGroupByStudyGroup) {
-                        out += '<tr>' + 
-                                        '<td>' + a + '</td>' +
-                                        '<td>' + item.name + '</td>' +
-                                        '<td>' + item.studyGroupByStudyGroup + '</td>' +
-                                '<tr>';
+                    out += '<tr>' + 
+                                    '<td>' + a + '</td>' +
+                                    '<td>' + item.name + '</td>' +
+                                    '<td>' + item.studyGroupByStudyGroup + '</td>' +
+                            '<tr>';
 
-                        a++;
-                   }
+                    a++;
                 });
 
                 $('#table-body').append(out);
 
             },
             error: function(xhr,textStatus){
-                console.log(textStatus);
+                alert('Refrash - ' + textStatus);
             }
         })
     });
