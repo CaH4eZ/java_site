@@ -8,19 +8,46 @@ $( document ).ready(function() {
         closeOnSelect: false
     });
 
-    //Обновление
+    //Обновление предметов
     $.ajax({
-        url:'http://localhost:8080/teacher/refrash',
+        url:'http://localhost:8080/teacher/refrashSubject',
+        type:'GET',
+        success: function(recieved){
+
+            //Удаление дочерних (jQuery)
+            $('#select-subject').empty();
+
+            var out = '<optgroup label="Предметы">';
+
+            recieved.forEach(function(item, i, arr) {
+               out += '<option value=' + item.id + '>' + item.name + '</option>';
+            });
+
+            out += '</optgroup>';
+
+            $('#select-subject').append(out);
+            
+            //Обновление material_select
+            $('select').material_select();
+        },
+        error: function(xhr,textStatus){
+            console.log(textStatus);
+        }
+    });
+
+    //Обновление групп 
+    $.ajax({
+        url:'http://localhost:8080/teacher/refrashStudyGroup',
         type:'GET',
         success: function(recieved){
 
             //Удаление дочерних (jQuery)
             $('#select-group').empty();
 
-            var out = '<optgroup label="Роли">';
+            var out = '<optgroup label="Группы">';
 
             recieved.forEach(function(item, i, arr) {
-               out += '<option>' + item.name + '</option>';
+               out += '<option value=' + item.id + '>' + item.name + '</option>';
             });
 
             out += '</optgroup>';
@@ -36,30 +63,35 @@ $( document ).ready(function() {
     });
 
     $('#refrash').click(function(){
+
+        var subject = $('#select-subject').val();
+        var group   = $('#select-group option:selected').text();
+
+        console.log("1 - " + subject + ", 2 - " + group);
+
         $.ajax({
-            url:'http://localhost:8080/teacher/refrash',
+            url:'http://localhost:8080/teacher/getStudents',
             type:'GET',
             success: function(recieved){
 
-                //Удаление дочерних (jQuery)
-                $('#select-group').empty();
+                $('#table-body').empty();
 
-                var outSelect = '<optgroup label="Роли">';
-                var outTable = '<tr>';
+                var out = '';
+                var a = 1;
 
                 recieved.forEach(function(item, i, arr) {
-                   outSelect += '<option>' + item.name + '</option>';
-                   outTable += '<td>' + item.name + '</td>';
+                   if (group == item.studyGroupByStudyGroup) {
+                        out += '<tr>' + 
+                                        '<td>' + a + '</td>' +
+                                        '<td>' + item.name + '</td>' +
+                                        '<td>' + item.studyGroupByStudyGroup + '</td>' +
+                                '<tr>';
+
+                        a++;
+                   }
                 });
 
-                outSelect += '</optgroup>';
-                outTable += '</tr>';
-
-                $('#select-group').append(outSelect);
-                $('#table-body').append(outTable);
-
-                //Обновление material_select
-                $('select').material_select();
+                $('#table-body').append(out);
 
             },
             error: function(xhr,textStatus){
