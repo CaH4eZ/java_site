@@ -5,14 +5,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.ugrasu.journal.dto.*;
-import ru.ugrasu.journal.model.entities.StudyGroupEntity;
-import ru.ugrasu.journal.model.entities.SubjectEntity;
-import ru.ugrasu.journal.model.entities.UserEntity;
-import ru.ugrasu.journal.model.entities.UserExcerciseEntity;
-import ru.ugrasu.journal.model.services.StudyGroupService;
-import ru.ugrasu.journal.model.services.SubjectService;
-import ru.ugrasu.journal.model.services.UserExcerciseService;
-import ru.ugrasu.journal.model.services.UserService;
+import ru.ugrasu.journal.model.entities.*;
+import ru.ugrasu.journal.model.services.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +28,7 @@ public class TeacherController {
     private UserService userService;
 
     @Autowired
-    private UserExcerciseService userExcerciseService;
+    private ExcerciseService excerciseService;
 
     @RequestMapping(value = "/refrashSubject", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
     public List<SubjectDto> findAllSubject() {
@@ -128,5 +122,32 @@ public class TeacherController {
                 return listUserDto;
             }
         }
+    }
+
+    @RequestMapping(value = "/getExcercises/{idSubject}/{idGroup}",
+            produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
+    public List<ExcerciseDto> findExcercises(@PathVariable("idSubject") int idSubject,
+                                             @PathVariable("idGroup") int idGroup)
+    {
+        System.out.println("TeacherController - findExcercises - " + idSubject + " " + idGroup);
+
+        List<ExcerciseEntity> listExcerciseEntity = excerciseService.findAll();
+        List<ExcerciseDto>       listExcerciseDto = new ArrayList<>();
+
+        listExcerciseEntity.forEach(excerciseEntity -> {
+            ExcerciseDto excerciseDto = new ExcerciseDto();
+            excerciseDto.setId(excerciseEntity.getId());
+            excerciseDto.setDate(excerciseEntity.getDate());
+
+            //Проверка соответствия группы и предмета
+            int subject = excerciseEntity.getSubjectBySubjectId().getId();
+            int group   = excerciseEntity.getGroupId();
+
+            if ((subject == idSubject) && (group == idGroup)) {
+                listExcerciseDto.add(excerciseDto);
+            }
+        });
+
+        return listExcerciseDto;
     }
 }
