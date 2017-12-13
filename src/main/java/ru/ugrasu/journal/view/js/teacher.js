@@ -82,18 +82,25 @@ $( document ).ready(function() {
 
                                 var arrayIndex = 0;
 
-                                item.excercisesById.forEach(function(item1, i1, arr1) {
-                                    
-                                    //Если даты не совпадают - на занятии не был
-                                    while (arrayDate[arrayIndex] != item1.date) {
-                                        out += '<td class="red lighten-2">Н</td>';
-                                        arrayIndex++;
-                                    }
+                                if (item.excercisesById.length != 0) {
+                                    item.excercisesById.forEach(function(item1, i1, arr1) {
+                                        
+                                        //Если даты не совпадают - на занятии не был
+                                        while (arrayDate[arrayIndex] != item1.date) {
+                                            out += '<td class="red lighten-2">Н</td>';
+                                            arrayIndex++;
+                                        }
 
-                                    //Если совпадают - был
-                                    out += '<td class="light-green lighten-2">+</td>';
-                                    arrayIndex++;
-                                });
+                                        //Если совпадают - был
+                                        out += '<td class="light-green lighten-2">+</td>';
+                                        arrayIndex++;
+                                    });
+                                }
+                                else {
+                                    for (var i = 0; i < arrayDate.length; i++) {
+                                        out += '<td class="red lighten-2">Н</td>';
+                                    }
+                                }
 
                     out += '</tr>';
 
