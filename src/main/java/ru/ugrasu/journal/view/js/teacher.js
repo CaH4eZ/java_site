@@ -1,5 +1,8 @@
 $( document ).ready(function() {
     
+    //Глобальный массив для хранения всех занятий по группе и предмету
+    var arrayDate = [];
+
     $('.datepicker').pickadate({
         selectMonth: true,
         selectYears: 5,
@@ -63,36 +66,38 @@ $( document ).ready(function() {
         }
     });
 
-    $('#refrash').click(function(){
-
-        //Для того, чтобы вывести текст
-        //var group = $('#select-group option:selected').text();
-
-        //При приеме был получен id в value
-        var group = $('#select-group').val();
-
+    function getStudents(group) {
         $.ajax({
             url:'http://localhost:8080/teacher/getStudentsByGroup/' + group,
             type:'GET',
-            success: function(recieved){
-
-                $('#table-body').empty();
+            success: function(recieved) {
 
                 var out = '';
-                var a = 1;
+                var rowNum = 1;
 
                 recieved.forEach(function(item, i, arr) {
                     out += '<tr>' + 
-                                '<td>' + a + '</td>' +
+                                '<td>' + rowNum + '</td>' +
                                 '<td>' + item.name + '</td>';
 
+                                var arrayIndex = 0;
+
                                 item.excercisesById.forEach(function(item1, i1, arr1) {
-                                    out += '<td>' + item1.date + '</td>';
+                                    
+                                    //Если даты не совпадают - на занятии не был
+                                    while (arrayDate[arrayIndex] != item1.date) {
+                                        out += '<td class="red lighten-2">Н</td>';
+                                        arrayIndex++;
+                                    }
+
+                                    //Если совпадают - был
+                                    out += '<td class="light-green lighten-2">+</td>';
+                                    arrayIndex++;
                                 });
 
                     out += '</tr>';
 
-                    a++;
+                    rowNum++;
                 });
 
                 $('#table-body').append(out);
@@ -102,10 +107,57 @@ $( document ).ready(function() {
                 alert('Refrash - ' + textStatus);
             }
         })
-    });
+    };
 
+    $('#refrash').click(function(){
+
+        //Для того, чтобы вывести текст
+        //var group = $('#select-group option:selected').text();
+
+        //При приеме был получен id в value
+        var subject = $('#select-subject').val();
+        var group = $('#select-group').val();
+
+        $.ajax({
+            url:'http://localhost:8080/teacher/getExcercises/' + subject + '/' + group,
+            type:'GET',
+            success: function(recieved) {
+
+                $('#table-head').empty();
+                $('#table-body').empty();
+                arrayDate = [];
+
+                var out = '';
+
+                if (recieved.length == 0) {
+                    out += '<tr><th>Похоже, у данной группы не ведется это предмет =)</th></tr>';
+                }
+                else {
+                    out += '<tr><th>№</th><th>Студент</th>';
+
+                    recieved.forEach(function(item, i, arr) {
+                        out += '<th>' + item.date + '</th>';
+                        arrayDate.push(item.date);
+                    })
+
+                    out += '</tr>';
+
+                    //Добавляем студентов через другой запрос
+                    getStudents(group);
+                };
+
+                $('#table-head').append(out);
+            },
+            error: function(xhr,textStatus){
+                alert('Refrash - ' + textStatus);
+            }
+        });
+    })
+
+    /*
     $('#add').click(function(){
         console.log('add');
         console.log(new Date('3.27.2008'));
     });
+    */
 });
