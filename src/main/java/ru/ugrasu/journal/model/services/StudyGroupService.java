@@ -18,4 +18,8 @@ public class StudyGroupService {
         return studyGroupRepository.findAll();
     }
 
+    public StudyGroupEntity findById(int id) {
+        return studyGroupRepository.findOne(id);
+    }
+
 }

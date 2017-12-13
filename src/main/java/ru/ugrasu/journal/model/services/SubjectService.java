@@ -18,4 +18,8 @@ public class SubjectService {
         return subjectRepository.findAll();
     }
 
+    public void delete(SubjectEntity subjectEntity) {
+        subjectRepository.delete(subjectEntity);
+    }
+
 }

@@ -18,4 +18,8 @@ public class ExcerciseService {
         return excerciseRepository.findAll();
     }
 
+    public void delete(ExcerciseEntity excerciseEntity) {
+        excerciseRepository.delete(excerciseEntity);
+    }
+
 }

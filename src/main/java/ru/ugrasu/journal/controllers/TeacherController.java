@@ -91,7 +91,12 @@ public class TeacherController {
                 UserDto userDto = new UserDto();
                 userDto.setId(userEntity.getId());
                 userDto.setName(userEntity.getName());
-                userDto.setStudyGroupByStudyGroup(userEntity.getStudyGroupByStudyGroup().getName());
+
+                StudyGroupDto studyGroupDto = new StudyGroupDto();
+                studyGroupDto.setId(userEntity.getStudyGroupByStudyGroup().getId());
+                studyGroupDto.setName(userEntity.getStudyGroupByStudyGroup().getName());
+
+                userDto.setStudyGroupByStudyGroup(studyGroupDto);
 
                 //Обработка промежуточной таблицы
                 List<UserExcerciseEntity> listUserExcerciseEntity = userEntity.getUserExcercisesById();

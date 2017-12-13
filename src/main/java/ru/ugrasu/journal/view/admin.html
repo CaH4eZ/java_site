@@ -21,50 +21,56 @@
         <span>Редактирование пользователя</span>
     </div>
     <div class="card-panel hoverable row">
-        <div class="input-field col s2">
+        <div class="input-field col s4">
             <select id="select-user1">
             </select>
             <label for="select-user1">Пользователь</label>
         </div>
 
-        <div class="input-field col s2">
+        <div class="input-field col s4">
             <input id="login" type="text">
             <label for="login">Логин</label>
         </div>
 
-        <div class="input-field col s2">
+        <div class="input-field col s4">
             <input id="password" type="text">
             <label for="password">Пароль</label>
         </div>
 
-        <div class="input-field col s2">
+        <br>
+
+        <div class="input-field col s4">
             <select id="select-role">
             </select>
             <label for="select-role">Роль</label>
         </div>
 
-        <div id="div-group" class="input-field col s2 hide">
+        <div id="div-group" class="input-field col s4 hide">
             <select id="select-group1">
             </select>
             <label for="select-group1">Группа</label>
         </div>
 
-        <div id="div-department" class="input-field col s2 hide">
+        <div id="div-department" class="input-field col s4 hide">
             <select id="select-department1">
             </select>
             <label for="select-department1">Кафедра</label>
         </div>        
 
-        <div class="col s1">
-        </div>
-
-        <div class="col s1">
+        <div class="col s2">
             <button id="addUser" class="btn-floating btn-small waves-effect waves-light light-green accent-4">
                 <i class="material-icons">check</i>
             </button>
         </div>
+
+        <div class="col s2">
+            <button id="deleteUser" class="btn-floating btn-small waves-effect waves-light red accent-4">
+                <i class="material-icons">cancel</i>
+            </button>
+        </div>
     </div>
 
+    <!--
     <div>
         <br>
         <br>
@@ -130,6 +136,7 @@
             </button>
         </div>
     </div>
+    -->
 
     <!-- Скрипты (jQuery перед Materialize!) -->
     <!-- TODO В продакшене поменять на min.js -->

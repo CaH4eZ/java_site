@@ -99,7 +99,13 @@ $( document ).ready(function() {
                                 else {
                                     for (var i = 0; i < arrayDate.length; i++) {
                                         out += '<td class="red lighten-2">Н</td>';
+                                        arrayIndex++;
                                     }
+                                }
+
+                                while (arrayIndex < arrayDate.length) {
+                                    out += '<td class="red lighten-2">Н</td>';
+                                    arrayIndex++;
                                 }
 
                     out += '</tr>';
@@ -137,7 +143,7 @@ $( document ).ready(function() {
                 var out = '';
 
                 if (recieved.length == 0) {
-                    out += '<tr><th>Похоже, у данной группы не ведется это предмет =)</th></tr>';
+                    out += '<tr><th>Похоже, у данной группы не ведется этот предмет =)</th></tr>';
                 }
                 else {
                     out += '<tr><th>№</th><th>Студент</th>';

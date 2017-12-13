@@ -16,4 +16,8 @@ public class RoleService {
     public List<RoleEntity> findAll() {
         return roleRepository.findAll();
     }
+
+    public RoleEntity findById(int id) {
+        return roleRepository.findOne(id);
+    }
 }

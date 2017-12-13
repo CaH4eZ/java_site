@@ -41,4 +41,16 @@ public class UserService {
         return newListUserEntity;
     }
 
+    public UserEntity findById(int id) {
+        return userRepository.findOne(id);
+    }
+
+    public void save(UserEntity userEntity) {
+        userRepository.save(userEntity);
+    }
+
+    public void delete(UserEntity userEntity) {
+        userRepository.delete(userEntity);
+    }
+
 }
