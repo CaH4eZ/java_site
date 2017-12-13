@@ -11,6 +11,7 @@ import java.util.List;
 public class ExcerciseDto {
     private int id;
     private Date date;
+    private int groupId;
     private SubjectDto subjectBySubjectId;
     private List<UserExcerciseDto> userExcercisesById;
 

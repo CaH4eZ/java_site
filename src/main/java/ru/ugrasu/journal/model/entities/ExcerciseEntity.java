@@ -14,6 +14,8 @@ public class ExcerciseEntity {
     private int id;
     @Basic@Column(name = "date")
     private Date date;
+    @Basic@Column(name = "group_id")
+    private int groupId;
     @ManyToOne@JoinColumn(name = "subject_id", referencedColumnName = "id", nullable = false)
     private SubjectEntity subjectBySubjectId;
     @OneToMany(mappedBy = "excerciseByExcercise")
