@@ -13,5 +13,7 @@ public class UserDto {
     private RoleDto roleByRole;
     private String studyGroupByStudyGroup;
     private DepartmentDto departmentByDepartment;
-    private List<UserExcerciseDto> userExcercisesById;
+
+    //Будем вытаскивать через промежуточную сущность сразу список занятий
+    private List<ExcerciseDto> ExcercisesById;
 }

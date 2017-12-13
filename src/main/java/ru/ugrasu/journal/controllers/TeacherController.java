@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.ugrasu.journal.dto.StudyGroupDto;
-import ru.ugrasu.journal.dto.SubjectDto;
-import ru.ugrasu.journal.dto.UserDto;
+import ru.ugrasu.journal.dto.*;
 import ru.ugrasu.journal.model.entities.StudyGroupEntity;
 import ru.ugrasu.journal.model.entities.SubjectEntity;
 import ru.ugrasu.journal.model.entities.UserEntity;
+import ru.ugrasu.journal.model.entities.UserExcerciseEntity;
 import ru.ugrasu.journal.model.services.StudyGroupService;
 import ru.ugrasu.journal.model.services.SubjectService;
+import ru.ugrasu.journal.model.services.UserExcerciseService;
 import ru.ugrasu.journal.model.services.UserService;
 
 import java.util.ArrayList;
@@ -32,6 +32,9 @@ public class TeacherController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserExcerciseService userExcerciseService;
 
     @RequestMapping(value = "/refrashSubject", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
     public List<SubjectDto> findAllSubject() {
@@ -95,6 +98,25 @@ public class TeacherController {
                 userDto.setId(userEntity.getId());
                 userDto.setName(userEntity.getName());
                 userDto.setStudyGroupByStudyGroup(userEntity.getStudyGroupByStudyGroup().getName());
+
+                //Обработка промежуточной таблицы
+                List<UserExcerciseEntity> listUserExcerciseEntity = userEntity.getUserExcercisesById();
+                List<ExcerciseDto> listExcerciseDto = new ArrayList<>();
+
+                if (listUserExcerciseEntity != null) {
+
+                    listUserExcerciseEntity.forEach(userExcerciseEntity -> {
+
+                        ExcerciseDto excerciseDto = new ExcerciseDto();
+
+                        excerciseDto.setId(userExcerciseEntity.getExcerciseByExcercise().getId());
+                        excerciseDto.setDate(userExcerciseEntity.getExcerciseByExcercise().getDate());
+
+                        listExcerciseDto.add(excerciseDto);
+                    });
+                }
+
+                userDto.setExcercisesById(listExcerciseDto);
 
                 listUserDto.add(userDto);
             });
