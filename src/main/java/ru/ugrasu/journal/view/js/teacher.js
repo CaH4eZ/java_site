@@ -3,13 +3,19 @@ $( document ).ready(function() {
     //Глобальный массив для хранения всех занятий по группе и предмету
     var arrayDate = [];
 
+    //СМЕНА СТРАНИЦЫ
+    $('#account').click(function(){
+        location.replace("admin.html");
+    });
+
     $('.datepicker').pickadate({
         selectMonth: true,
         selectYears: 5,
         today: 'Сегодня',
         clear: 'Очистить',
         close: 'OK',
-        closeOnSelect: false
+        closeOnSelect: false,
+        format: 'yyyy-mm-dd'
     });
 
     //Обновление предметов
@@ -122,7 +128,7 @@ $( document ).ready(function() {
         })
     };
 
-    $('#refrash').click(function(){
+    $('#refrash').click(function (){
 
         //Для того, чтобы вывести текст
         //var group = $('#select-group option:selected').text();
@@ -167,10 +173,29 @@ $( document ).ready(function() {
         });
     })
 
-    /*
-    $('#add').click(function(){
-        console.log('add');
-        console.log(new Date('3.27.2008'));
+    $('#add').click(function() {
+        //Дата, группа и предмет
+        //Передаем для сохранения занятия
+        var d = $('#datepicker').val();
+        var g = $('#select-group').val();
+        var s = $('#select-subject').val();
+
+        $.ajax({
+            url:'http://localhost:8080/teacher/saveExcercise',
+            type:'POST',
+            data: {
+                date: d,
+                groupId: g,
+                subjectId: s
+            },
+            success: function(recieved) {
+                //Обновляем данные
+                $('#refrash').click();
+            },
+            error: function(xhr,textStatus){
+                alert('Add Date - ' + textStatus);
+            }
+        });
+
     });
-    */
 });
