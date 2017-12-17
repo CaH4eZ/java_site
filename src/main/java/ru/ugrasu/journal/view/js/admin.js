@@ -1,8 +1,37 @@
 $( document ).ready(function() {
 
-	//Глобальная переменная
+	//Глобальные переменные
+
 	//Массив пользователей после загрузки
 	var usersArray = [];
+
+	//Прелоадер
+	var preloader = 
+	'<div class="preloader-wrapper active">' + 
+        '<div class="spinner-layer spinner-blue-only">' +
+            '<div class="circle-clipper left">' +
+                '<div class="circle"></div>' +
+            '</div><div class="gap-patch">' +
+                '<div class="circle"></div>' +
+            '</div><div class="circle-clipper right">' +
+                '<div class="circle"></div>' +
+            '</div>' +
+        '</div>' +
+    '</div>';
+
+    //СМЕНА СТРАНИЦЫ
+    $('#account').click(function(){
+        location.replace("teacher.html");
+    });
+
+    var toast = $('<span>Загрузка... </span>').add(preloader);
+
+    //Включаем на несколько секунд всплывающее окно (загрузка пройдет быстрее, но просто для интерактивности) 
+    Materialize.toast(toast, 1500, 'rounded');
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    //Блок обновления																	//
+    //////////////////////////////////////////////////////////////////////////////////////
 
 	//Обновление пользователей
     $.ajax({
@@ -31,7 +60,7 @@ $( document ).ready(function() {
             $('select').material_select();
         },
         error: function(xhr,textStatus){
-            alert('Обновление пользователей - ' + textStatus);
+        	Materialize.toast('Обновление пользователей - ' + textStatus, 2000, 'rounded');
         }
     });
 
@@ -56,7 +85,7 @@ $( document ).ready(function() {
             $('select').material_select();
         },
         error: function(xhr,textStatus){
-            alert('Обновление ролей - ' + textStatus);
+        	Materialize.toast('Обновление ролей - ' + textStatus, 2000, 'rounded');
         }
     });
 
@@ -81,7 +110,7 @@ $( document ).ready(function() {
             $('select').material_select();
         },
         error: function(xhr,textStatus){
-            alert('Обновление кафедр - ' + textStatus);
+        	Materialize.toast('Обновление кафедр - ' + textStatus, 2000, 'rounded');
         }
     });
 
@@ -106,9 +135,13 @@ $( document ).ready(function() {
             $('select').material_select();
         },
         error: function(xhr,textStatus){
-            alert('Обновление групп - ' + textStatus);
+        	Materialize.toast('Обновление групп - ' + textStatus, 2000, 'rounded');
         }
     });
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    //Конец блок обновления																//
+    //////////////////////////////////////////////////////////////////////////////////////
 
     $('#select-user1').change(function() {
 
@@ -230,14 +263,13 @@ $( document ).ready(function() {
 			            $('select').material_select();
 			        },
 			        error: function(xhr,textStatus){
-			            alert('Обновление пользователей - ' + textStatus);
+			        	Materialize.toast('Обновление пользователей - ' + textStatus, 2000, 'rounded');
 			        }
 			    });
-
-	        	alert("Сохранено");
+			    Materialize.toast('Сохранено!', 2000, 'rounded');
 	        },
 	        error: function(xhr,textStatus){
-	            alert('Сохранение пользователя - ' + textStatus);
+	        	Materialize.toast('Сохранение пользователя - ' + textStatus, 2000, 'rounded');
 	        }
 	    });
     });
@@ -285,14 +317,13 @@ $( document ).ready(function() {
 			            $('select').material_select();
 			        },
 			        error: function(xhr,textStatus){
-			            alert('Обновление пользователей - ' + textStatus);
+			        	Materialize.toast('Обновление пользователей - ' + textStatus, 2000, 'rounded');
 			        }
 			    });
-
-	        	alert("Удалено");
+			    Materialize.toast('Удалено!', 2000, 'rounded');
 	        },
 	        error: function(xhr,textStatus){
-	            alert('Удаление пользователя - ' + textStatus);
+	        	Materialize.toast('Удаление пользователя - ' + textStatus, 2000, 'rounded');
 	        }
 	    });
     });
