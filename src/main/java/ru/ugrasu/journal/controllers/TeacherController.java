@@ -1,8 +1,10 @@
 package ru.ugrasu.journal.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ru.ugrasu.journal.dto.*;
 import ru.ugrasu.journal.model.entities.*;
@@ -154,5 +156,21 @@ public class TeacherController {
         });
 
         return listExcerciseDto;
+    }
+
+    @RequestMapping(value = "/saveExcercise", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, method = RequestMethod.POST)
+    public void saveExcercise(ExcerciseDto excerciseDto) {
+        System.out.println("TeacherController - saveExcercise");
+
+        ExcerciseEntity excerciseEntity = new ExcerciseEntity();
+
+        SubjectEntity subjectEntity       = subjectService.findById(excerciseDto.getSubjectId());
+
+        excerciseEntity.setId(excerciseDto.getId());
+        excerciseEntity.setDate(excerciseDto.getDate());
+        excerciseEntity.setGroupId(excerciseDto.getGroupId());
+        excerciseEntity.setSubjectBySubjectId(subjectEntity);
+
+        excerciseService.save(excerciseEntity);
     }
 }

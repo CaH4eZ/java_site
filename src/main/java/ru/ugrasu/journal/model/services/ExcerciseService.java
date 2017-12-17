@@ -22,4 +22,8 @@ public class ExcerciseService {
         excerciseRepository.delete(excerciseEntity);
     }
 
+    public void save(ExcerciseEntity excerciseEntity) {
+        excerciseRepository.save(excerciseEntity);
+    }
+
 }
