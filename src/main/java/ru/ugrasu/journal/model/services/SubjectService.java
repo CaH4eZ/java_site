@@ -22,4 +22,8 @@ public class SubjectService {
         subjectRepository.delete(subjectEntity);
     }
 
+    public SubjectEntity findById(int id) {
+        return subjectRepository.findOne(id);
+    }
+
 }

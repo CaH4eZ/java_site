@@ -12,7 +12,7 @@ public class ExcerciseDto {
     private int id;
     private Date date;
     private int groupId;
-    private SubjectDto subjectBySubjectId;
+    private int subjectId;
     private List<UserExcerciseDto> userExcercisesById;
 
 }
