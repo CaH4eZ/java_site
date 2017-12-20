@@ -26,4 +26,8 @@ public class ExcerciseService {
         excerciseRepository.save(excerciseEntity);
     }
 
+    public ExcerciseEntity findById(int id) {
+        return excerciseRepository.findOne(id);
+    }
+
 }
