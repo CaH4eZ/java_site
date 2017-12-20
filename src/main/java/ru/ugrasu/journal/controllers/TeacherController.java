@@ -32,6 +32,9 @@ public class TeacherController {
     @Autowired
     private ExcerciseService excerciseService;
 
+    @Autowired
+    private UserExcerciseService userExcerciseService;
+
     @RequestMapping(value = "/refrashSubject", produces = APPLICATION_JSON_UTF8_VALUE, method = GET)
     public List<SubjectDto> findAllSubject() {
         System.out.println("TeacherController - findAllSubject");
@@ -172,5 +175,32 @@ public class TeacherController {
         excerciseEntity.setSubjectBySubjectId(subjectEntity);
 
         excerciseService.save(excerciseEntity);
+    }
+
+    @RequestMapping(value = "/saveUserExcercise", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, method = RequestMethod.POST)
+    public void saveUserExcercise(UserExcerciseDto userExcerciseDto) {
+        System.out.println("TeacherController - saveUserExcercise");
+
+        int userId = userExcerciseDto.getUserId();
+        int excerciseId = userExcerciseDto.getExcerciseId();
+
+        UserExcerciseEntity userExcerciseEntity = userExcerciseService.findByUE(userId,excerciseId);
+
+        if (userExcerciseEntity == null) {
+            //Создаем нового
+            userExcerciseEntity = new UserExcerciseEntity();
+            userExcerciseEntity.setId(0);
+
+            UserEntity userEntity = userService.findById(userId);
+            ExcerciseEntity excerciseEntity = excerciseService.findById(excerciseId);
+
+            userExcerciseEntity.setUserByUser(userEntity);
+            userExcerciseEntity.setExcerciseByExcercise(excerciseEntity);
+
+            userExcerciseService.save(userExcerciseEntity);
+        } else {
+            //Удаляем запись из таблицы
+            userExcerciseService.delete(userExcerciseEntity);
+        }
     }
 }

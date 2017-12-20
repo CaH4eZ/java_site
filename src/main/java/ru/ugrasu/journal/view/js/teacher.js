@@ -1,7 +1,50 @@
-$( document ).ready(function() {
+//Для хранения дат всех занятий
+var arrayDate = [];
+
+//Для хранения id студентов по данному занятию
+var arrayStudentsId = [];
+
+//Для хранения id занятий
+var arrayExcerciseId = [];
+
+function cellClick(obj) {
     
-    //Глобальный массив для хранения всех занятий по группе и предмету
-    var arrayDate = [];
+    //Меняем + на Н
+    if ($("#" + obj.id).text() == "+") {
+        $("#" + obj.id).text("Н");
+    } else {
+        $("#" + obj.id).text("+");
+    }
+    
+    //Меняем цвета
+    $("#" + obj.id).toggleClass("red");
+    $("#" + obj.id).toggleClass("light-green");
+
+    //Вырезаем из obj.id формата u_e индексы для user(u) и excercise(e)
+    var uId = (obj.id).substring(0,(obj.id).indexOf("_")) - 1;
+    var eId = (obj.id).substr((obj.id).indexOf("_") + 1);
+
+    //Получаем значения из глобальных массивов. User и Excercise по id
+    var userId = arrayStudentsId[uId];
+    var excerciseId = arrayExcerciseId[eId];
+
+    //Отправляем значение на сервер
+    $.ajax({
+        url:'http://localhost:8080/teacher/saveUserExcercise',
+        type:'POST',
+        data: {
+            userId: userId,
+            excerciseId: excerciseId
+        },
+        success: function() {
+        },
+        error: function(xhr,textStatus){
+            alert('UserExcercise - ' + textStatus);
+        }
+    });
+};
+
+$( document ).ready(function() {
 
     //СМЕНА СТРАНИЦЫ
     $('#account').click(function(){
@@ -17,6 +60,29 @@ $( document ).ready(function() {
         closeOnSelect: false,
         format: 'yyyy-mm-dd'
     });
+
+    //Прелоадер
+    var preloader = 
+    '<div class="preloader-wrapper active">' + 
+        '<div class="spinner-layer spinner-blue-only">' +
+            '<div class="circle-clipper left">' +
+                '<div class="circle"></div>' +
+            '</div><div class="gap-patch">' +
+                '<div class="circle"></div>' +
+            '</div><div class="circle-clipper right">' +
+                '<div class="circle"></div>' +
+            '</div>' +
+        '</div>' +
+    '</div>';
+
+    var toast = $('<span>Загрузка... </span>').add(preloader);
+
+    //Включаем на несколько секунд всплывающее окно (загрузка пройдет быстрее, но просто для интерактивности) 
+    Materialize.toast(toast, 1000, 'rounded');
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    //Блок обновления                                                                   //
+    //////////////////////////////////////////////////////////////////////////////////////
 
     //Обновление предметов
     $.ajax({
@@ -41,7 +107,7 @@ $( document ).ready(function() {
             $('select').material_select();
         },
         error: function(xhr,textStatus){
-            alert('Обновление предметов - ' + textStatus);
+            Materialize.toast('Обновление предметов - ' + textStatus, 2000, 'rounded');
         }
     });
 
@@ -68,9 +134,13 @@ $( document ).ready(function() {
             $('select').material_select();
         },
         error: function(xhr,textStatus){
-            alert('Обновление групп - ' + textStatus);
+            Materialize.toast('Обновление групп - ' + textStatus, 2000, 'rounded');   
         }
     });
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    //Конец блока обновления                                                            //
+    //////////////////////////////////////////////////////////////////////////////////////
 
     function getStudents(group) {
         $.ajax({
@@ -80,37 +150,61 @@ $( document ).ready(function() {
 
                 var out = '';
                 var rowNum = 1;
+                arrayStudentsId = [];
 
                 recieved.forEach(function(item, i, arr) {
+                    arrayStudentsId.push(item.id);
+
                     out += '<tr>' + 
                                 '<td>' + rowNum + '</td>' +
                                 '<td>' + item.name + '</td>';
 
                                 var arrayIndex = 0;
 
+                                //Если у студента есть ссылки на занятия
                                 if (item.excercisesById.length != 0) {
+
                                     item.excercisesById.forEach(function(item1, i1, arr1) {
                                         
-                                        //Если даты не совпадают - на занятии не был
+                                        //Если дата занятия в массиве дат по занятию
+                                        //и текущая дата у студента не совпадают - не был на занятии
                                         while (arrayDate[arrayIndex] != item1.date) {
-                                            out += '<td class="red lighten-2">Н</td>';
+                                            out += '<td id=' 
+                                                + rowNum + '_' + arrayIndex + 
+                                                ' onclick="cellClick(this)" class="red lighten-2">Н</td>';
                                             arrayIndex++;
                                         }
 
-                                        //Если совпадают - был
-                                        out += '<td class="light-green lighten-2">+</td>';
+                                        //TODO
+                                        /*
+                                            ОШИБКА, если перевести студента в другую группу
+                                            Или занятия отмечаются, как в прошлой группе
+                                            Или, если дат нету, страница зависает!!!
+                                        */
+
+                                        //Как вариант, при переводе - удалять все занятия студента
+
+                                        //Если совпадают дата - студент был на занятии
+                                        out += '<td id=' 
+                                            + rowNum + '_' + arrayIndex + 
+                                            ' onclick="cellClick(this)" class="light-green lighten-2">+</td>';
                                         arrayIndex++;
                                     });
-                                }
-                                else {
+                                } else {
+                                    //Если нету - для всех занятий Н
                                     for (var i = 0; i < arrayDate.length; i++) {
-                                        out += '<td class="red lighten-2">Н</td>';
+                                        out += '<td id='
+                                            + rowNum + '_' + arrayIndex + 
+                                            ' onclick="cellClick(this)" class="red lighten-2">Н</td>';
                                         arrayIndex++;
                                     }
                                 }
 
+                                //Если еще остались занятия - доставляем Н
                                 while (arrayIndex < arrayDate.length) {
-                                    out += '<td class="red lighten-2">Н</td>';
+                                    out += '<td id=' 
+                                            + rowNum + '_' + arrayIndex + 
+                                            ' onclick="cellClick(this)" class="red lighten-2">Н</td>';
                                     arrayIndex++;
                                 }
 
@@ -123,14 +217,14 @@ $( document ).ready(function() {
 
             },
             error: function(xhr,textStatus){
-                alert('Refrash - ' + textStatus);
+                Materialize.toast('Refrash - ' + textStatus, 2000, 'rounded');
             }
         })
     };
 
     $('#refrash').click(function (){
 
-        //Для того, чтобы вывести текст
+        //Для того, чтобы получить текст
         //var group = $('#select-group option:selected').text();
 
         //При приеме был получен id в value
@@ -142,9 +236,12 @@ $( document ).ready(function() {
             type:'GET',
             success: function(recieved) {
 
+                Materialize.toast(toast, 1000, 'rounded');
+
                 $('#table-head').empty();
                 $('#table-body').empty();
                 arrayDate = [];
+                arrayExcerciseId = [];
 
                 var out = '';
 
@@ -157,6 +254,7 @@ $( document ).ready(function() {
                     recieved.forEach(function(item, i, arr) {
                         out += '<th>' + item.date + '</th>';
                         arrayDate.push(item.date);
+                        arrayExcerciseId.push(item.id);
                     })
 
                     out += '</tr>';
@@ -168,7 +266,7 @@ $( document ).ready(function() {
                 $('#table-head').append(out);
             },
             error: function(xhr,textStatus){
-                alert('Refrash - ' + textStatus);
+                Materialize.toast('Refrash - ' + textStatus, 2000, 'rounded');
             }
         });
     })
@@ -193,9 +291,8 @@ $( document ).ready(function() {
                 $('#refrash').click();
             },
             error: function(xhr,textStatus){
-                alert('Add Date - ' + textStatus);
+                Materialize.toast('Add date - ' + textStatus, 2000, 'rounded');
             }
         });
-
     });
 });
