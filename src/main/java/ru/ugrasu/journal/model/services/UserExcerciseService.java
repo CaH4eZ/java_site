@@ -21,4 +21,12 @@ public class UserExcerciseService {
     public void delete(UserExcerciseEntity userExcerciseEntity) {
         userExcerciseRepository.delete(userExcerciseEntity);
     }
+
+    public UserExcerciseEntity findByUE(int userId, int excerciseId) {
+        return userExcerciseRepository.findByUE(userId, excerciseId);
+    }
+
+    public void save(UserExcerciseEntity userExcerciseEntity) {
+        userExcerciseRepository.save(userExcerciseEntity);
+    }
 }
