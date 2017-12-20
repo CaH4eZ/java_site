@@ -1,7 +1,6 @@
 $( document ).ready(function() {
 
 	//Глобальные переменные
-
 	//Массив пользователей после загрузки
 	var usersArray = [];
 
@@ -27,7 +26,7 @@ $( document ).ready(function() {
     var toast = $('<span>Загрузка... </span>').add(preloader);
 
     //Включаем на несколько секунд всплывающее окно (загрузка пройдет быстрее, но просто для интерактивности) 
-    Materialize.toast(toast, 1500, 'rounded');
+    Materialize.toast(toast, 1000, 'rounded');
 
     //////////////////////////////////////////////////////////////////////////////////////
     //Блок обновления																	//
@@ -41,7 +40,6 @@ $( document ).ready(function() {
 
         	usersArray = [];
         	usersArray = recieved;
-        	console.log(usersArray);
 
             //Удаление дочерних (jQuery)
             $('#select-user1').empty();
@@ -52,7 +50,6 @@ $( document ).ready(function() {
                out += '<option value=' + item.id + '>' + item.name + ' - ' +
                		item.roleByRole.name + '</option>';
             });
-
 
             $('#select-user1').append(out);
             
@@ -140,7 +137,7 @@ $( document ).ready(function() {
     });
 
     //////////////////////////////////////////////////////////////////////////////////////
-    //Конец блок обновления																//
+    //Конец блока обновления															//
     //////////////////////////////////////////////////////////////////////////////////////
 
     $('#select-user1').change(function() {
