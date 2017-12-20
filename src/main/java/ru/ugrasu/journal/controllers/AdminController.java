@@ -26,9 +26,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RequestMapping(value = "admin")
 public class AdminController {
 
-    //TODO
-    //Циклится связь при изменении группы студента
-
     @Autowired
     private UserService userService;
 
@@ -207,7 +204,9 @@ public class AdminController {
         if (userEntity != null) {
             //Удаляем связи
             userEntity.getSubjectsById().forEach(subjectEntity -> {
+
                 subjectEntity.getExcercisesById().forEach(excerciseEntity -> {
+
                     excerciseEntity.getUserExcercisesById().forEach(userExcerciseEntity -> {
                         userExcerciseService.delete(userExcerciseEntity);
                     });
