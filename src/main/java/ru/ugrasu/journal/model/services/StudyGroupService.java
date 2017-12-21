@@ -2,6 +2,7 @@ package ru.ugrasu.journal.model.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.ugrasu.journal.exception.NotFoundException;
 import ru.ugrasu.journal.model.entities.StudyGroupEntity;
 import ru.ugrasu.journal.model.repositories.InstituteRepository;
 import ru.ugrasu.journal.model.repositories.StudyGroupRepository;
@@ -19,7 +20,14 @@ public class StudyGroupService {
     }
 
     public StudyGroupEntity findById(int id) {
-        return studyGroupRepository.findOne(id);
+        StudyGroupEntity studyGroupEntity = studyGroupRepository.findOne(id);
+
+        if (studyGroupEntity == null) {
+            throw new NotFoundException("Не найдена группа");
+        }
+        else {
+            return studyGroupEntity;
+        }
     }
 
 }

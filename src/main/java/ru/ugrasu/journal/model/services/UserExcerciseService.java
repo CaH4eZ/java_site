@@ -2,6 +2,7 @@ package ru.ugrasu.journal.model.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.ugrasu.journal.exception.NotFoundException;
 import ru.ugrasu.journal.model.entities.UserExcerciseEntity;
 import ru.ugrasu.journal.model.repositories.SubjectRepository;
 import ru.ugrasu.journal.model.repositories.UserExcerciseRepository;
@@ -23,7 +24,14 @@ public class UserExcerciseService {
     }
 
     public UserExcerciseEntity findByUE(int userId, int excerciseId) {
-        return userExcerciseRepository.findByUE(userId, excerciseId);
+        UserExcerciseEntity userExcerciseEntity = userExcerciseRepository.findByUE(userId, excerciseId);
+
+        if (userExcerciseEntity == null) {
+            throw new NotFoundException("Не найден студент по данному занятию");
+        }
+        else {
+            return userExcerciseEntity;
+        }
     }
 
     public void save(UserExcerciseEntity userExcerciseEntity) {

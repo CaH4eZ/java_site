@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ru.ugrasu.journal.dto.*;
+import ru.ugrasu.journal.exception.NotFoundException;
 import ru.ugrasu.journal.model.entities.*;
 import ru.ugrasu.journal.model.services.*;
 
@@ -43,7 +44,7 @@ public class TeacherController {
         List<SubjectEntity> listSubjectEntity = subjectService.findAll();
 
         if (listSubjectEntity == null) {
-            throw new RuntimeException("No groups");
+            throw new NotFoundException("Нет предметов");
         }
         else {
             listSubjectEntity.forEach(subjectEntity -> {
@@ -66,7 +67,7 @@ public class TeacherController {
         List<StudyGroupEntity> listStudyGroupEntity = studyGroupService.findAll();
 
         if (listStudyGroupEntity == null) {
-            throw new RuntimeException("No groups");
+            throw new NotFoundException("Нет групп");
         }
         else {
             listStudyGroupEntity.forEach(studyGroupEntity -> {
@@ -89,7 +90,7 @@ public class TeacherController {
         List<UserEntity> listUserEntity = userService.findUserByGroupId(id);
 
         if (listUserEntity == null) {
-            throw new RuntimeException("No groups");
+            throw new NotFoundException("Нет студентов");
         }
         else {
             listUserEntity.forEach(userEntity -> {
@@ -125,12 +126,7 @@ public class TeacherController {
                 listUserDto.add(userDto);
             });
 
-            if (listUserDto == null) {
-                throw new RuntimeException("No students");
-            }
-            else {
-                return listUserDto;
-            }
+            return listUserDto;
         }
     }
 
@@ -167,7 +163,7 @@ public class TeacherController {
 
         ExcerciseEntity excerciseEntity = new ExcerciseEntity();
 
-        SubjectEntity subjectEntity       = subjectService.findById(excerciseDto.getSubjectId());
+        SubjectEntity subjectEntity = subjectService.findById(excerciseDto.getSubjectId());
 
         excerciseEntity.setId(excerciseDto.getId());
         excerciseEntity.setDate(excerciseDto.getDate());

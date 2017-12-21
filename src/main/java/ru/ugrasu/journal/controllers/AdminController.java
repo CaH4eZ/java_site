@@ -10,6 +10,7 @@ import ru.ugrasu.journal.dto.DepartmentDto;
 import ru.ugrasu.journal.dto.RoleDto;
 import ru.ugrasu.journal.dto.StudyGroupDto;
 import ru.ugrasu.journal.dto.UserDto;
+import ru.ugrasu.journal.exception.NotFoundException;
 import ru.ugrasu.journal.model.entities.DepartmentEntity;
 import ru.ugrasu.journal.model.entities.RoleEntity;
 import ru.ugrasu.journal.model.entities.StudyGroupEntity;
@@ -55,7 +56,7 @@ public class AdminController {
         List<UserEntity> listUserEntity = userService.findAll();
 
         if (listUserEntity == null) {
-            throw new RuntimeException("No users");
+            throw new NotFoundException("Нет пользователей");
         }
         else {
             listUserEntity.forEach(userEntity -> {
@@ -109,7 +110,7 @@ public class AdminController {
         List<RoleEntity> listRoleEntity = roleService.findAll();
 
         if (listRoleEntity == null) {
-            throw new RuntimeException("No roles");
+            throw new NotFoundException("Нет ролей");
         }
         else {
             listRoleEntity.forEach(roleEntity -> {
@@ -132,7 +133,7 @@ public class AdminController {
         List<DepartmentEntity> listDepartmentEntity = departmentService.findAll();
 
         if (listDepartmentEntity == null) {
-            throw new RuntimeException("No departments");
+            throw new NotFoundException("Нет кафедр");
         }
         else {
             listDepartmentEntity.forEach(departmentEntity -> {
@@ -155,7 +156,7 @@ public class AdminController {
         List<StudyGroupEntity> listStudyGroupEntity = studyGroupService.findAll();
 
         if (listStudyGroupEntity == null) {
-            throw new RuntimeException("No studyGroups");
+            throw new NotFoundException("Нет групп");
         }
         else {
             listStudyGroupEntity.forEach(studyGroupEntity -> {
