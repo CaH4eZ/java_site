@@ -24,14 +24,7 @@ public class UserExcerciseService {
     }
 
     public UserExcerciseEntity findByUE(int userId, int excerciseId) {
-        UserExcerciseEntity userExcerciseEntity = userExcerciseRepository.findByUE(userId, excerciseId);
-
-        if (userExcerciseEntity == null) {
-            throw new NotFoundException("Не найден студент по данному занятию");
-        }
-        else {
-            return userExcerciseEntity;
-        }
+        return userExcerciseRepository.findByUE(userId, excerciseId);
     }
 
     public void save(UserExcerciseEntity userExcerciseEntity) {
