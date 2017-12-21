@@ -39,7 +39,7 @@ function cellClick(obj) {
         success: function() {
         },
         error: function(xhr,textStatus){
-            alert('UserExcercise - ' + textStatus);
+            Materialize.toast('UserExcercise - ' + textStatus, 2000, 'rounded');
         }
     });
 };
