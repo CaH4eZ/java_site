@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import ru.ugrasu.journal.JournalApplicationTests;
-import ru.ugrasu.journal.exception.ResourceNotFoundException;
+import ru.ugrasu.journal.exception.NotFoundException;
 import ru.ugrasu.journal.model.entities.RoleEntity;
 import ru.ugrasu.journal.model.entities.StudyGroupEntity;
 import ru.ugrasu.journal.model.entities.UserEntity;
@@ -23,7 +23,7 @@ public class UserServiceTest extends JournalApplicationTests {
     private UserService userService;
 
     @Test
-    public void findByIdMustUserEntity() throws Exception {
+    public void findByIdMustReturnUserEntity() throws Exception {
         UserEntity u = new UserEntity();
 
         RoleEntity r = new RoleEntity();
@@ -35,7 +35,7 @@ public class UserServiceTest extends JournalApplicationTests {
         g.setName("1541б");
 
         u.setId(1);
-        u.setName("test");
+        u.setName("testUser");
         u.setStudyGroupByStudyGroup(g);
         u.setRoleByRole(r);
 
@@ -46,10 +46,9 @@ public class UserServiceTest extends JournalApplicationTests {
         assertEquals(u.getId(), userEntity.getId());
     }
 
-    @Test(expected = ResourceNotFoundException.class)
-    public void findByIdMustReturnResourceNotFoundException() throws ResourceNotFoundException {
+    @Test(expected = NotFoundException.class)
+    public void findByIdMustReturnNotFoundException() throws NotFoundException {
         when(userRepository.findOne(Integer.MIN_VALUE)).thenReturn(null);
         userService.findById(Integer.MIN_VALUE);
     }
-
 }
